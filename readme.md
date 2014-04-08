@@ -23,3 +23,11 @@
 --------------------
 * 在效能較差的伺服器或是同時太多人使用，可能導致解答載入緩慢
 * 當係數超過百位（通常是亂輸入）或元素名稱有三位以上（Uut等等，幾乎不可能用到）時，可能因為化學式無法被正確拆解而發生 CPU 超載或是 PHP 被強制停止
+
+## Yuxin Edit Record
+--------------------
+
+not finish:
+
+* Prepare for UI update.
+* Optimize core and make into function.
