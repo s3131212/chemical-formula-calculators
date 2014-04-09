@@ -1,0 +1,118 @@
+.chem {
+float: left;
+position: relative;
+height: 95px;
+display: block;
+padding-left: 7px;
+padding-right: 7px;
+}
+.cnt {
+margin-top: 33px;
+}
+
+.board {
+background: #34495E;
+margin: 10px 0 0 0;
+width: 100%;
+float: left;
+}
+
+.details {
+    background: #2C3E50;
+    margin: 0 0 10px 0;
+    padding-top: 20px;
+    width: 100%;
+    float: left;
+}
+
+.letter-enmax {
+    font-size: 120%;
+    padding-right: 3px;
+}
+
+.inner {
+color: #FFF;
+padding: 10px 50px 30px 50px;
+float: left;
+width: 100%;
+}
+
+.explain {
+position: absolute;
+bottom: 0;
+}
+
+.sen {
+    width: 50%;
+    float: right;
+}
+
+.tip {
+    padding-top: 10px;
+}
+
+.TURQUOISE {
+    background: #1ABC9C;
+}
+.enTURQUOISE {
+    background: #16A085;
+}
+
+.EMERALD {
+    background: #2ECC71;
+}
+.enEMERALD {
+    background: #27AE60;
+}
+
+.EMERALD {
+    background: #3498DB;
+}
+.enEMERALD {
+    background: #2980B9;
+}
+
+.AMETHYST {
+    background: #9B59B6;
+}
+.enAMETHYST {
+    background: #8E44AD;
+}
+
+.ASPHALT {
+    background: #34495E;
+}
+.enASPHALT {
+    background: #2C3E50;
+}
+
+.CARROT {
+    background: #E67E22;
+}
+.enCARROT {
+    background: #D35400;
+}
+
+.ALIZARIN {
+    background: #E74C3C;
+}
+.enALIZARIN {
+    background: #C0392B;
+}
+
+.CONCRETE {
+    background: #95A5A6;
+}
+.enCONCRETE {
+    background: #7F8C8D;
+}
+
+#line-1 {
+    font-size: 36px;
+    font-weight: 300;
+}
+
+#line-2 {
+font-size: 24px;
+margin-top: 0;
+}
