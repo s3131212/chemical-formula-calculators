@@ -1,13 +1,14 @@
 <?php
 require ( "aw.php" );
-ini_set ( 'display_errors' , 0 );
+set_time_limit(20);
+error_reporting(0);
 if( isset($_GET['err']) && $_GET["err"] == "1" ) {
 	$err = "<div class='alert alert-warning'>請輸入一個正常的化學式</div>";
 } //化學式錯誤
 
 $url = $_SERVER['HTTPS'] ? 'https' : 'http' . '://'. $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];  //判斷目前網址，用於導向
 
-if ( !isset ( $_GET["gram"] ) || $_GET["gram"] == NULL || !isset ( $_GET["formula"] ) || $_GET["gram"] == NULL ) { //檢查參數是否已設定
+if ( !isset ( $_GET["formula"] )) { //檢查參數是否已設定
 
 ?>
 
@@ -24,11 +25,11 @@ if ( !isset ( $_GET["gram"] ) || $_GET["gram"] == NULL || !isset ( $_GET["formul
 			<form method="get" id="form">
 				<div class="input-group input-group-lg">
            			<span class="input-group-addon">化學式</span>
-            		<input type="text" required class="form-control input-lg" id="formula" name="formula" placeholder="碳酸鈣輸入 CaCO3 ，注意大小寫">
+            		<input type="text" required class="form-control input-lg" id="formula" name="formula" placeholder="碳酸鈣輸入 CaCO3 ，注意大小寫，必填">
         		</div></br>
         		<div class="input-group input-group-lg">
            			<span class="input-group-addon">重量</span>
-            		<input type="text" required class="form-control input-lg" id="gram" name="gram" placeholder="重量，以克為單位">
+            		<input type="text" class="form-control input-lg" id="gram" name="gram" placeholder="重量，以克為單位，選填">
         		</div></br>
       			<input type="submit" value="送出" class="btn btn-primary">
     		</form>
@@ -40,7 +41,6 @@ if ( !isset ( $_GET["gram"] ) || $_GET["gram"] == NULL || !isset ( $_GET["formul
 <?php
 
 } else {
-
 	$formula = urldecode( $_GET["formula"] ) ;
 	if ( !preg_match("/^[a-zA-Z0-9()]+$/" , $formula ) ) {
 		header ( "location:$url?err=1" );
@@ -109,7 +109,39 @@ if ( !isset ( $_GET["gram"] ) || $_GET["gram"] == NULL || !isset ( $_GET["formul
 			$dontcountme = false;//將$dontcountme設回false
 		}
 	}
-//分割化學式結束
+	//分割化學式結束
+	//檢查重複
+	$forumla_check_unique = array_unique($matches);
+	if ( count($matches) != count($forumla_check_unique) ){
+	    $i = 0;
+	    $counta = count($matches);
+	    $formula_temp = array();
+	    while( $i < $counta ){
+	    	if( !preg_match( "/^[0-9]$/" , $matches[$i] ) ){ // 如果是參數就直接丟進陣列，否則進行處理
+	    		if( !in_array( $matches[$i] , $formula_temp ) ){ //如果先前沒出現過就直接丟進陣列
+	    			$formula_temp[] = $matches[$i];
+	    		}else{
+	    			$key = array_search($matches[$i], $formula_temp);
+	    			if( preg_match( "/^[0-9]$/" , $matches[$i+1] ) ){
+	    				$y = $matches[$i+1]; //如果下個值是參數就先丟進暫存
+	    				$i++; // 避免參數被重複丟入陣列
+	    			}else{
+	    				$y = 1; //如果下個值不是參數就把參數設為 1 然後丟進暫存
+	    			}
+	    			if( preg_match( "/^[0-9]$/" , $formula_temp[$key+1] ) ){
+	    				$formula_temp[$key+1] += $y; //如果處理過後的陣列的下個值是參數就加上去
+	    			}else{
+	    				array_splice($formula_temp,$key+1,0,$y+$formula_temp[$key+1]+1); //如果下個值不是參數就插入一個參數
+	    			}
+	    		}
+	    	}else{
+	    		$formula_temp[] = $matches[$i];
+	    	}
+	    	$i++;
+	    }
+	    $matches = $formula_temp;
+	}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -131,8 +163,11 @@ if ( !isset ( $_GET["gram"] ) || $_GET["gram"] == NULL || !isset ( $_GET["formul
 		<div class="container">
 
 <?php
-
-	$gram = $_GET["gram"];
+	if( !isset( $_GET["gram"] ) || $_GET["gram"] == null){
+		$gram = 100;
+	}else{
+		$gram = $_GET["gram"];
+	}
 	settype ( $gram , "double" ) ;
 
 ?>
@@ -154,7 +189,6 @@ if ( !isset ( $_GET["gram"] ) || $_GET["gram"] == NULL || !isset ( $_GET["formul
 			</section>
 <?php
 	$f = count ( $matches ) ;
-	//$k=0;$j=0;$h=0;$i=0;//初始化
 	$k = $j = $h = $i = 0;
 	for ( $g = 0 ; $g < $f ; $g++) {
 		if ( !preg_match ( "/^[0-9]*[1-9][0-9]*$/" , $matches[$g] ) ) { //先檢查此項是否為係數
