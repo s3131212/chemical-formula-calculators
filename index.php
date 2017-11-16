@@ -150,7 +150,7 @@ if ( !isset ( $_GET["formula"] )) { //檢查參數是否已設定
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 		<link href="./bootstrap.min.css" rel="stylesheet">
 		<link href="./style.css" rel="stylesheet">
-		<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 		<script type="text/javascript">
 		MathJax.Hub.Config({
 			tex2jax: {
