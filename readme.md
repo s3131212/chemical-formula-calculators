@@ -18,7 +18,7 @@
 
 Image:
 
-![Preview](http://i.imgur.com/N3XHJD3.png)
+![Preview](https://i.imgur.com/jA3C22c.png)
 
 資源貢獻
 --------------------
